@@ -10,7 +10,7 @@ const passport = require('./config/passport')
 const methodOverride = require('method-override')
 
 
-
+app.use('/upload', express.static(__dirname + '/upload'))
 app.engine('handlebars', handlebars({ defaultLayout: "main" }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
