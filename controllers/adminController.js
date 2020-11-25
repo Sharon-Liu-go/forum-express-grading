@@ -1,7 +1,7 @@
-const restController = {
+const adminController = {
   getRestaurants: (req, res) => {
     return res.render('admin/restaurants')
   }
 }
 
-module.exports = restController
+module.exports = adminController
