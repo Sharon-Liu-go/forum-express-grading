@@ -1,6 +1,7 @@
 const db = require('../models')
 const restaurant = require('../models/restaurant')
 const { Restaurant } = db
+const { User } = db
 const fs = require('fs')
 
 const adminController = {
@@ -124,8 +125,11 @@ const adminController = {
           })
 
       })
-  }
+  },
 
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true, nest: true }).then(users => { return res.render('admin/users', { users }) })
+  }
 }
 
 
