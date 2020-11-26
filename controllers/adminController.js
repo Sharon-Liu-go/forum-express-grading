@@ -129,9 +129,19 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({ raw: true, nest: true }).then(users => { return res.render('admin/users', { users }) })
+  },
+
+  putUsers: (req, res) => {
+    return User.findByPk(req.params.id).then(user => {
+      user.update({
+        isAdmin: user.isAdmin ? false : true
+      }).then(() => {
+        req.flash('success_messages', 'user was successfully updated ')
+        return res.redirect('/admin/users')
+      })
+
+    })
   }
 
 }
-
-
 module.exports = adminController
