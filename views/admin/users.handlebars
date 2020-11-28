@@ -15,12 +15,12 @@
   <tbody>
     {{#each users}}
     <tr>
-      <th scope="row">{{this.name}}</th>
-      <td>{{this.email}}</td>
+      <th class="align-middle" scope="row">{{this.name}}</th>
+      <td class="align-middle">{{this.email}}</td>
       {{#if isAdmin}}
-      <td>admin</td>
+      <td class="align-middle">admin</td>
       {{else}}
-      <td>user</td>
+      <td class="align-middle">user</td>
       {{/if}}
       <td>
         <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST" style="display: inline;">
