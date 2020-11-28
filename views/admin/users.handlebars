@@ -23,7 +23,7 @@
       <td>user</td>
       {{/if}}
       <td>
-        <form action="/admin/users/{{this.id}}?_method=PUT" method="POST" style="display: inline;">
+        <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST" style="display: inline;">
           <button type="submit" class="btn btn-link">
             {{#if isAdmin}}
             set as user
