@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-
+app.use(methodOverride('_method'))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.engine('handlebars', handlebars({ defaultLayout: "main" }))
 app.set('view engine', 'handlebars')
@@ -28,7 +28,7 @@ app.use(session(
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-app.use(methodOverride('_method'))
+
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
