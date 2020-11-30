@@ -57,16 +57,20 @@ const adminController = {
   getRestaurant: (req, res) => {
 
     //用findByPk / raw:true的方法 
-    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => { return res.render('admin/restaurant', { restaurant }) })
+    return Restaurant.findByPk(req.params.id, { nest: true, raw: true, include: [Category] }).then(restaurant => {
+      return res.render('admin/restaurant', { restaurant })
+    })
 
     //用findByPk / toJSON的方法
-    // return Restaurant.findByPk(req.params.id).then(restaurant => { return res.render('admin/restaurant', { restaurant: restaurant.toJSON() }) })
+    // return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => { return res.render('admin/restaurant', { restaurant: restaurant.toJSON() }) })
 
     //用findOne / toJSON的方法
-    // return Restaurant.findOne({ where: { id: req.params.id } }).then(restaurant => res.render('admin/restaurant', { restaurant: restaurant.toJSON() }))
+    // return Restaurant.findOne({ where: { id: req.params.id, }, include: [Category] }).then(restaurant => res.render('admin/restaurant', { restaurant: restaurant.toJSON() }))
 
     //用findOne / raw:true的方法 
-    // return Restaurant.findOne({ raw: true, where: { id: req.params.id } }).then(restaurant => res.render('admin/restaurant', { restaurant }))
+    // return Restaurant.findOne({ nest: true, raw: true, include: [Category], where: { id: req.params.id } }).then(restaurant => {
+    //   res.render('admin/restaurant', { restaurant })
+    // })
   },
 
   editRestaurant: (req, res) => {
