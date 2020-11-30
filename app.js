@@ -38,6 +38,12 @@ app.use((req, res, next) => {
   next()
 })
 
+// Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+//   if (operator === '===')
+//     return (v1 === v2) ? options.fn(this) : options.inverse(this)
+
+// })
 
 app.listen(port, () => {
   db.sequelize.sync() //讓models跟資料庫同步
