@@ -13,6 +13,9 @@ const userController = {
     } else if (req.body.email.indexOf(" ") >= 0) {
       req.flash('error_messages', '信箱不能有空格！')
       return res.redirect('/signup')
+    } else if (req.body.email.indexOf("@") <= 0) {
+      req.flash('error_messages', 'email欄位不是郵箱地址')
+      return res.redirect('/signup')
     } else {
       // confirm unique user
       User.findOne({ where: { email: req.body.email } }).then(user => {
