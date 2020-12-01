@@ -2,17 +2,23 @@ const db = require("../models")
 const restaurant = require("../models/restaurant")
 const { Restaurant, Category } = db
 
-
 const restController = {
   getRestaurants: (req, res) => {
-    Restaurant.findAll({ nest: true, raw: true, include: [Category] }).then(restaurants => {
-      console.log(restaurants)
+    const whereQuery = {}
+    let categoryId = ""
+    if (req.query.categoryId) {
+      categoryId = Number(req.query.categoryId)
+      whereQuery.CategoryId = categoryId
+    }
+    Restaurant.findAll({ nest: true, raw: true, include: [Category], where: whereQuery }).then(restaurants => {
       const data = restaurants.map(r => ({
         ...r,
         description: r.description.substring(0, 50)
       }))
-      console.log(data)
-      return res.render('restaurants', { restaurants: data })
+      Category.findAll({ nest: true, raw: true }).then(categories => {
+        return res.render('restaurants', { restaurants: data, categories, categoryId })
+      })
+
     })
   },
 
