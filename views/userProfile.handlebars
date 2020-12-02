@@ -5,13 +5,11 @@
     </figure>
   </section>
 
-
-  <section class="info">
+  <section class="info p-4">
     <h1>{{user.name}}</h1>
     <h3>{{user.email}}</h3>
-    <a class="btn btn-primary" href="/users/:{{this.id}}/edit" role="button">Edit</a>
+    <br />
+    <a class="btn btn-primary" href="/users/{{user.id}}/edit" role="button">Edit</a>
   </section>
-
-
 
 </main>

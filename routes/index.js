@@ -61,6 +61,7 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   app.get('/users/:id', authenticatedAdmin, userController.getUser)
+  app.get('/users/:id/edit', authenticatedAdmin, userController.editUser)
 }
 
 
