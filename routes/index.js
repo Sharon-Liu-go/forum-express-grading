@@ -54,18 +54,13 @@ module.exports = (app, passport) => {
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategories)
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategories)
 
-
-
-
   app.get('/signup', userController.signUpPage)
-
   app.post('/signup', userController.signUp)
-
   app.get('/signin', userController.signInPage)
-
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-
   app.get('/logout', userController.logout)
+
+  app.get('/users/:id', authenticatedAdmin, userController.getUser)
 }
 
 

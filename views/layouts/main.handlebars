@@ -23,8 +23,7 @@
         {{/if}}
         {{#if user}}
         <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal"><a
-            href="/users/{{user.id}}" style="color: white;margin-right: 10px;"></a>Profile</button>
+        <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
 
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
         {{/if}}
