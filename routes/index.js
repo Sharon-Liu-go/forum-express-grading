@@ -61,8 +61,11 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   app.get('/users/:id', authenticatedAdmin, userController.getUser)
+<<<<<<< HEAD
   app.get('/users/:id/edit', authenticatedAdmin, userController.editUser)
 
+=======
+>>>>>>> 8743514 (addcolumn image to users and add getUser feature)
 }
 
 
