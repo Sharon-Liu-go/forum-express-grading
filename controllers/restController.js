@@ -1,6 +1,6 @@
 const db = require("../models")
 const restaurant = require("../models/restaurant")
-const { Restaurant, Category } = db
+const { Restaurant, Category, User, Comment } = db
 const pageLimit = 10
 
 const restController = {
@@ -24,7 +24,6 @@ const restController = {
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
       const prev = page - 1 < 1 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
-      console.log(result)
       const data = result.rows.map(r => ({
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
@@ -38,8 +37,8 @@ const restController = {
   },
 
   getRestaurant: (req, res) => {
-    Restaurant.findByPk(req.params.id, { nest: true, raw: true, include: [Category] }).then(restaurant => {
-      return res.render('restaurant', { restaurant })
+    Restaurant.findByPk(req.params.id, { include: [Category, { model: Comment, include: [User] }] }).then(restaurant => {
+      return res.render('restaurant', { restaurant: restaurant.toJSON() })
     })
   }
 
