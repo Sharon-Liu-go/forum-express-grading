@@ -52,6 +52,7 @@ const userController = {
 
   getUser: (req, res) => {
     User.findByPk(req.params.id).then(user => {
+<<<<<<< HEAD
       return res.render('userProfile', { user: user.toJSON() })
     })
   },
@@ -61,6 +62,12 @@ const userController = {
       console.log(user.toJSON())
       return res.render('editProfile', { user: user.toJSON() })
     })
+=======
+      console.log(user)
+      return res.render('userProfile', { user: user.toJSON() })
+    })
+
+>>>>>>> 8743514 (addcolumn image to users and add getUser feature)
   }
 }
 module.exports = userController
