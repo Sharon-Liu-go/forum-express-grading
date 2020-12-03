@@ -1,17 +1,28 @@
-<main class="d-flex">
-  <section class="avatar" style="width: 500px ; height:500px ; ">
-    <figure class="figure">
+<main>
+  <div class="userInformation d-flex ">
+    <section class="avatar" style="width: 500px ; height:500px ; ">
+      <figure class="figure">
 
-      <img src={{#if user.image}}{{user.image}}{{else}}"https://i.imgur.com/FR75AqX.png?2" {{/if}}
-        class="figure-img img-fluid rounded" alt="上傳影片" style="border:rgba(0,0,0,0.5)">
-    </figure>
-  </section>
+        <img src={{#if user.image}}{{user.image}}{{else}}"https://i.imgur.com/FR75AqX.png?2" {{/if}}
+          class="figure-img img-fluid rounded" alt="上傳影片" style="border:rgba(0,0,0,0.5)">
+      </figure>
+    </section>
 
-  <section class="info p-4">
-    <h1>{{user.name}}</h1>
-    <h3>{{user.email}}</h3>
+    <section class="info p-4">
+      <h1>{{user.name}}</h1>
+      <h3>{{user.email}}</h3>
+      <br />
+      <a class="btn btn-primary" href="/users/{{user.id}}/edit" role="button">Edit</a>
+    </section>
+  </div>
+
+  <div class="restaurants_with_UserComments">
+    <div>{{count}} 已評論餐廳</div>
     <br />
-    <a class="btn btn-primary" href="/users/{{user.id}}/edit" role="button">Edit</a>
-  </section>
+    {{#each user.Comments}}
+    <a href="/restaurants/{{this.Restaurant.id}}"><img src={{this.Restaurant.image}} style="width: 50px;"></a>
+
+    {{/each}}
+  </div>
 
 </main>

@@ -1,5 +1,5 @@
 const db = require('../models')
-const User = db.User
+const { Restaurant, Category, User, Comment } = db
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
@@ -54,8 +54,12 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    User.findByPk(req.params.id).then(user => {
-      return res.render('userProfile', { user: user.toJSON() })
+    let countOfComments = 0
+    User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
+      User.count({ where: { id: req.params.id }, include: { model: Comment, include: [Restaurant] } }).then(count => {
+        countOfComments = user.Comments.length ? count : 0
+        return res.render('userProfile', { user: user.toJSON(), count: countOfComments })
+      })
     })
   },
 
