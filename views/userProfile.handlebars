@@ -1,11 +1,12 @@
 <main class="d-flex">
-  <section class="avatar">
+  <section class="avatar" style="width: 500px ; height:500px ; ">
     <figure class="figure">
-      <img src="{{user.image}}" class="figure-img img-fluid rounded" alt="...">
+
+      <img src={{#if user.image}}{{user.image}}{{else}}"https://i.imgur.com/FR75AqX.png?2" {{/if}}
+        class="figure-img img-fluid rounded" alt="上傳影片" style="border:rgba(0,0,0,0.5)">
     </figure>
   </section>
 
-<<<<<<< HEAD
   <section class="info p-4">
     <h1>{{user.name}}</h1>
     <h3>{{user.email}}</h3>
@@ -13,15 +14,4 @@
     <a class="btn btn-primary" href="/users/{{user.id}}/edit" role="button">Edit</a>
   </section>
 
-=======
-
-  <section class="info">
-    <h1>{{user.name}}</h1>
-    <h3>{{user.email}}</h3>
-    <a class="btn btn-primary" href="/users/:{{this.id}}/edit" role="button">Edit</a>
-  </section>
-
-
-
->>>>>>> 8743514 (addcolumn image to users and add getUser feature)
 </main>

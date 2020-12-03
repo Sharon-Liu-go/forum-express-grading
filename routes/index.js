@@ -60,12 +60,11 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
 
-  app.get('/users/:id', authenticatedAdmin, userController.getUser)
-<<<<<<< HEAD
-  app.get('/users/:id/edit', authenticatedAdmin, userController.editUser)
+  app.get('/users/:id', authenticated, userController.getUser)
+  app.get('/users/:id/edit', authenticated, userController.editUser)
+  app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+  app.get('/users/:id/imageDelete', authenticated, userController.deleteUserImage)
 
-=======
->>>>>>> 8743514 (addcolumn image to users and add getUser feature)
 }
 
 

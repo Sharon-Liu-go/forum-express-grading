@@ -1,4 +1,4 @@
-<form action="/admin/restaurants" method="POST" enctype="multipart/form-data">
+<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
@@ -6,6 +6,14 @@
 
   <div class="form-group">
     <label for="image">Image</label>
+    <br />
+    <div class="mb-1">
+      <span style="color:navy">原始檔案：{{#if user.image}}{{user.image}}{{else}}無{{/if}}
+        <a class="btn" href="/users/{{user.id}}/imageDelete" role="button" style="display:contents ; color:crimson"><i
+            class="fas fa-trash-alt"></i></a>
+      </span>
+    </div>
+
     <input type="file" class="form-control-file" id="image" name="image">
   </div>
 
