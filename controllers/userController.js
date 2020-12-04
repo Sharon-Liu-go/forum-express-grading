@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Restaurant, Category, User, Comment, Favorite } = db
+const { Restaurant, Category, User, Comment, Favorite, Like } = db
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
@@ -131,6 +131,20 @@ const userController = {
     }).then((favorite) => {
       favorite.destroy().then((restaurant) => { return res.redirect('back') })
     })
+  },
+
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      RestaurantId: req.params.restaurantId
+    }).then((restaurant) => { return res.redirect('back') })
+  },
+
+  removeLike: (req, res) => {
+    return Like.findOne({
+      UserId: helpers.getUser(req).id,
+      RestaurantId: req.params.restaurantId
+    }).then((like) => { like.destroy().then((restaurant) => { return res.redirect('back') }) })
   }
 
 }
