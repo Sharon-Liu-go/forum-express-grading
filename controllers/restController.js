@@ -40,7 +40,8 @@ const restController = {
   },
 
   getRestaurant: (req, res) => {
-    Restaurant.findByPk(req.params.id, { include: [Category, { model: User, as: 'FavoritedUsers' }, { model: Comment, include: [User] }] }).then(restaurant => {
+    Restaurant.findByPk(req.params.id, { include: [Category, { model: User, as: 'FavoritedUsers' }, { model: User, as: 'LikeUsers' }, { model: Comment, include: [User] }] }).then(restaurant => {
+      console.log(restaurant)
       //餐廳瀏覽次數
       restaurant.update({
         viewCounts: restaurant.viewCounts + 1
@@ -48,7 +49,10 @@ const restController = {
       //登入的使用者有無收藏此間餐廳
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
-      return res.render('restaurant', { restaurant: restaurant.toJSON(), isFavorited })
+      // //登入的使用者有無Like此間餐廳
+      const isLiked = restaurant.LikeUsers.map(d => d.id).includes(helpers.getUser(req).id)
+
+      return res.render('restaurant', { restaurant: restaurant.toJSON(), isLiked })
     })
   },
 
