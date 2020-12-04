@@ -2,6 +2,7 @@ const db = require("../models")
 const restaurant = require("../models/restaurant")
 const { Restaurant, Category, User, Comment } = db
 const pageLimit = 10
+const helpers = require('../_helpers')
 
 const restController = {
   getRestaurants: (req, res) => {
@@ -27,7 +28,8 @@ const restController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
-        categoryName: r.dataValues.Category.name
+        categoryName: r.dataValues.Category.name,
+        isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(r.id)
       }))
       Category.findAll({ nest: true, raw: true }).then(categories => {
         return res.render('restaurants', { restaurants: data, categories, categoryId, totalPage, prev, next, page })
