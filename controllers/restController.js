@@ -52,7 +52,7 @@ const restController = {
       // //登入的使用者有無Like此間餐廳
       const isLiked = restaurant.LikeUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
-      return res.render('restaurant', { restaurant: restaurant.toJSON(), isLiked })
+      return res.render('restaurant', { restaurant: restaurant.toJSON(), isLiked, isFavorited })
     })
   },
 
@@ -82,14 +82,32 @@ const restController = {
 
   getDashboard: (req, res) => {
     return Promise.all([
-      Restaurant.findByPk(req.params.id, { include: [Category, { model: Comment, include: [User] }] })
+      Restaurant.findByPk(req.params.id, { include: [Category, { model: Comment, include: [User] }, { model: User, as: 'FavoritedUsers' }] })
     ]).then(([restaurant]) => {
-      return res.render('dashboard', { restaurant: restaurant.toJSON() })
+      const favoritedCount = restaurant.FavoritedUsers.length
+      return res.render('dashboard', { restaurant: restaurant.toJSON(), favoritedCount })
     })
+  },
 
+  getTopRestaurant: (req, res) => {
+    Restaurant.findAll({ include: [{ model: User, as: 'FavoritedUsers' }] })
+      .then(restaurants => {
+        restaurants = restaurants.map(restaurant => ({
+          ...restaurant.dataValues,
+          description: restaurant.dataValues.description.substring(0, 50),
+          FavoritedCount: restaurant.FavoritedUsers.length,
+          isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(restaurant.id),
+        })
+        )
+        console.log('-------------------------------------------')
+        console.log(restaurants)
+        restaurants = restaurants.sort((a, b) => b.FavoritedCount - a.FavoritedCount).slice(0, 10)
+        console.log('=========================================')
+        console.log(restaurants)
+        return res.render('topRestaurant', { restaurants: restaurants })
+      })
   }
 }
-
 module.exports = restController
 
 
