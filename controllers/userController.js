@@ -1,9 +1,11 @@
 const db = require('../models')
-const { Restaurant, Category, User, Comment } = db
+const { Restaurant, Category, User, Comment, Favorite } = db
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
+const favorite = require('../models/favorite')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -106,7 +108,6 @@ const userController = {
   },
 
   deleteUserImage: (req, res) => {
-    console.log('==========')
     User.findByPk(req.params.id).then(user => {
       user.update({ image: null })
       return res.redirect(`/users/${user.id}/edit`)
