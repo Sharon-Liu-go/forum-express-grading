@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Comment)
       User.belongsToMany(models.Restaurant, { through: models.Favorite, foreignKey: 'UserId', as: 'FavoritedRestaurants' })
       User.belongsToMany(models.Restaurant, { through: models.Like, foreignKey: 'UserId', as: 'LikeRestaurants' })
-      User.belongsToMany(models.User, { through: models.Followship, foreignKey: 'followingId', as: 'Followers' })
-      User.belongsToMany(models.User, { through: models.User, foreignKey: 'followerId', as: 'Followings' })
+      User.belongsToMany(models.User, { through: models.Followship, foreignKey: 'FollowingId', as: 'Followers' })
+      User.belongsToMany(models.User, { through: models.Followship, foreignKey: 'FollowerId', as: 'Followings' })
     }
   };
   User.init({
