@@ -6,6 +6,7 @@ const imgur = require('imgur-node-api')
 const favorite = require('../models/favorite')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers')
+const restaurant = require('../models/restaurant')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -112,7 +113,26 @@ const userController = {
       user.update({ image: null })
       return res.redirect(`/users/${user.id}/edit`)
     })
+  },
+
+  addFavorite: (req, res) => {
+    return Favorite.create({
+      UserId: helpers.getUser(req).id,
+      RestaurantId: req.params.restaurantId
+    }).then((restaurant) => { return res.redirect('back') })
+  },
+
+  removeFavorite: (req, res) => {
+    return Favorite.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        RestaurantId: req.params.restaurantId
+      }
+    }).then((favorite) => {
+      favorite.destroy().then((restaurant) => { return res.redirect('back') })
+    })
   }
+
 }
 module.exports = userController
 
