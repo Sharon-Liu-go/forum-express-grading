@@ -58,13 +58,26 @@ const userController = {
     res.redirect('/signin')
   },
 
+  // getUser: (req, res) => {
+  //   let countOfComments = 0
+  //   User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
+  //     User.count({ where: { id: req.params.id }, include: { model: Comment, include: [Restaurant] } }).then(count => {
+  //       countOfComments = user.Comments.length ? count : 0
+  //       return res.render('userProfile', { user: user.toJSON(), count: countOfComments })
+  //     })
+  //   })
+  // },
+
+
   getUser: (req, res) => {
-    let countOfComments = 0
-    User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
-      User.count({ where: { id: req.params.id }, include: { model: Comment, include: [Restaurant] } }).then(count => {
-        countOfComments = user.Comments.length ? count : 0
-        return res.render('userProfile', { user: user.toJSON(), count: countOfComments })
-      })
+    User.findByPk(req.params.id, { include: [{ model: Comment, include: [Restaurant] }, { model: Restaurant, as: 'FavoritedRestaurants' }, { model: User, as: 'Followings' }, { model: User, as: 'Followers' }] }).then(user => {
+      const isFollowed = user.Followers.map(u => u.id).includes(helpers.getUser(req).id)
+      // const followers = user.Followers.sort((a, b) => b.createdAt - a.createdAt)
+      // const followings = user.Followings.sort((a, b) => b.createdAt - a.createdAt)
+      // const favoritedRestaurants = user.FavoritedRestaurants.sort((a, b) => b.createdAt - a.createdAt)
+      // const comments = user.Comments.sort((a, b) => b.createdAt - a.createdAt)
+
+      return res.render('userProfile', { userData: user.toJSON(), isFollowed, })
     })
   },
 

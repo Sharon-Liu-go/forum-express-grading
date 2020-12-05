@@ -52,7 +52,7 @@ const restController = {
       // //登入的使用者有無Like此間餐廳
       const isLiked = restaurant.LikeUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
-      return res.render('restaurant', { restaurant: restaurant.toJSON(), isLiked })
+      return res.render('restaurant', { restaurant: restaurant.toJSON(), isLiked, isFavorited })
     })
   },
 
