@@ -19,11 +19,10 @@
             {{/ifCond}}
             <br />
             <br />
-
-            <li>{{userData.Comments.length}} 已評論餐廳</li>
-            <li>{{userData.FavoritedRestaurants.length}} 收藏的餐廳</li>
-            <li>{{userData.Followings.length}} followings(追蹤者）</li>
-            <li>{{userData.Followers.length}} followers(追隨者）</li>
+            <li><strong>{{userData.Comments.length}}</strong> 已評論餐廳</li>
+            <li><strong>{{userData.FavoritedRestaurants.length}}</strong> 收藏的餐廳</li>
+            <li><strong>{{userData.Followings.length}}</strong> followings</li>
+            <li><strong>{{userData.Followers.length}}</strong> followers</li>
             <br />
 
             {{#ifCond userData.id user.id}}
