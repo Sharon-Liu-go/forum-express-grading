@@ -58,13 +58,21 @@ const userController = {
     res.redirect('/signin')
   },
 
+  // getUser: (req, res) => {
+  //   let countOfComments = 0
+  //   User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
+  //     User.count({ where: { id: req.params.id }, include: { model: Comment, include: [Restaurant] } }).then(count => {
+  //       countOfComments = user.Comments.length ? count : 0
+  //       return res.render('userProfile', { user: user.toJSON(), count: countOfComments })
+  //     })
+  //   })
+  // },
+
+
   getUser: (req, res) => {
-    let countOfComments = 0
-    User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
-      User.count({ where: { id: req.params.id }, include: { model: Comment, include: [Restaurant] } }).then(count => {
-        countOfComments = user.Comments.length ? count : 0
-        return res.render('userProfile', { user: user.toJSON(), count: countOfComments })
-      })
+    User.findByPk(req.params.id, { include: [{ model: Comment, include: [Restaurant] }, { model: Restaurant, as: 'FavoritedRestaurants' }, { model: User, as: 'Followings' }, { model: User, as: 'Followers' }] }).then(user => {
+      const isFollowed = user.Followers.map(u => u.id).includes(helpers.getUser(req).id)
+      return res.render('userProfile', { userData: user.toJSON(), isFollowed, })
     })
   },
 
@@ -156,6 +164,7 @@ const userController = {
           ...user.dataValues,
           FollowerCount: user.Followers.length,
           isFollowed: helpers.getUser(req).Followings.map(u => u.id).includes(user.id)
+
         }))
         // 依追蹤者人數排序清單
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -165,17 +174,17 @@ const userController = {
 
   addFollowing: (req, res) => {
     return Followship.create({
-      FollowerId: helpers.getUser(req).id,
-      FollowingId: req.params.userId
-    }).then(followshop => {
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.userId
+    }).then(followship => {
       return res.redirect('back')
     })
   },
 
   removeFollowing: (req, res) => {
-    Followship.findOne({
-      FollowerId: helpers.getUser(req).id,
-      FollowingId: req.params.userId
+    return Followship.findOne({
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.userId
     }).then(followship => {
       followship.destroy().then(followship => { return res.redirect('back') })
     })
