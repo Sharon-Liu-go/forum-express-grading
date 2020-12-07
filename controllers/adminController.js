@@ -63,10 +63,9 @@ const adminController = {
   getRestaurant: (req, res) => {
 
     //用findByPk / raw:true的方法 
-    return Restaurant.findByPk(req.params.id, { nest: true, raw: true, include: [Category] }).then(restaurant => {
-      return res.render('admin/restaurant', { restaurant })
+    adminService.getRestaurant(req, res, data => {
+      return res.render('admin/restaurant', data)
     })
-
     //用findByPk / toJSON的方法
     // return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => { return res.render('admin/restaurant', { restaurant: restaurant.toJSON() }) })
 
