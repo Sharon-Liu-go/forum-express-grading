@@ -13,7 +13,6 @@ const adminController = {
     adminService.getRestaurant(req, res, data => {
       return res.json(data)
     })
-
   }
 }
 

@@ -14,6 +14,6 @@ const adminService = {
     return Restaurant.findByPk(req.params.id, { nest: true, raw: true, include: [Category] }).then(restaurant => {
       callback({ restaurant })
     })
-  }
+  },
 }
 module.exports = adminService
