@@ -10,6 +10,16 @@ const restaurant = require('../models/restaurant')
 const user = require('../models/user')
 const followship = require('../models/followship')
 
+function userId() {
+  const users = User.findAll()
+  Promise.all([users])
+    .then((users) => {
+      users = users[0].map(u => u.id)
+      const index = Math.floor(Math.random() * users.length)
+      return users[index]
+    }).catch(error => console.log(error))
+}
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -46,6 +56,8 @@ const userController = {
   },
 
   signInPage: (req, res) => {
+    const commentUserId = userId()
+    console.log(`userId:${commentUserId}`)
     return res.render('signin')
   },
   signIn: (req, res) => {
