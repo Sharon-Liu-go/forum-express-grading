@@ -27,11 +27,14 @@ const restController = {
       const next = page + 1 > pages ? pages : page + 1
       const data = result.rows.map(r => ({
         ...r.dataValues,
+        // description: "67",
         description: r.dataValues.description.substring(0, 50),
         categoryName: r.dataValues.Category.name,
+        // "劉芳怡",
         isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(r.id),
         isLiked: helpers.getUser(req).LikeRestaurants.map(d => d.id).includes(r.id)
       }))
+
       Category.findAll({ nest: true, raw: true }).then(categories => {
         return res.render('restaurants', { restaurants: data, categories, categoryId, totalPage, prev, next, page })
       })

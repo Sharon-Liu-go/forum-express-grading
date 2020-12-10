@@ -2,7 +2,7 @@ const express = require('express')
 const db = require('../models')
 const { Restaurant, User, Category } = db
 
-const categoryService = {
+let categoryService = {
   getCategories: (req, res, callback) => {
     if (req.params.id) {
       return Category.findByPk(req.params.id, { nest: true, raw: true }).then((category) => {
@@ -10,7 +10,8 @@ const categoryService = {
       })
     } return Category.findAll({ nest: true, raw: true }).then(categories => { callback({ categories }) })
 
-
   }
 }
+
 module.exports = categoryService
+
