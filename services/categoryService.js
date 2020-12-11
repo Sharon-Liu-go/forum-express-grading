@@ -18,6 +18,13 @@ let categoryService = {
     return Category.create({ name: req.body.name }).then(() => {
       callback({ status: "success", message: "成功新增一筆分類" })
     }).catch(err => console.log(err))
+  },
+  putCategories: (req, res, callback) => {
+    if (!req.body.name || (req.body.name.indexOf(" ") === 0)) {   //多一個首字不能為空格的判斷
+      callback({ status: "error", message: "請輸入類別名稱" })
+    } return Category.findByPk(req.params.id).then(category => category.update({ name: req.body.name })).then(() => {
+      callback({ status: "success", message: "成功修改" })
+    }).catch(err => console.log(err))
   }
 }
 
