@@ -33,12 +33,13 @@ const categoryController = {
   },
 
   deleteCategories: (req, res) => {
-    return Category.findByPk(req.params.id).then((category) => category.destroy()).then(() => {
-      req.flash('success_messages', '成功刪除一筆類別')
-      res.redirect('/admin/categories')
+    categoryService.deleteCategories(req, res, data => {
+      if (data['status'] === 'success') {
+        req.flash('success_messages', data['message'])
+        res.redirect('/admin/categories')
+      }
     }).catch(err => console.log(err))
   }
-
-
 }
+
 module.exports = categoryController

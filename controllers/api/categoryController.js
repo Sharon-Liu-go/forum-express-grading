@@ -26,6 +26,11 @@ const categoryController = {
       return res.json(data)
     }).catch(err => console.log(err))
   },
+  deleteCategories: (req, res) => {
+    categoryService.deleteCategories(req, res, data => {
+      return res.json(data)
+    }).catch(err => console.log(err))
+  }
 }
 
 module.exports = categoryController

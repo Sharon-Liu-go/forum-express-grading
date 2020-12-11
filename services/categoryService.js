@@ -25,6 +25,11 @@ let categoryService = {
     } return Category.findByPk(req.params.id).then(category => category.update({ name: req.body.name })).then(() => {
       callback({ status: "success", message: "成功修改" })
     }).catch(err => console.log(err))
+  },
+  deleteCategories: (req, res, callback) => {
+    return Category.findByPk(req.params.id).then((category) => category.destroy()).then(() => {
+      callback({ status: 'success', message: '成功刪除一筆類別' })
+    }).catch(err => console.log(err))
   }
 }
 
