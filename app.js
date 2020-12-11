@@ -1,5 +1,4 @@
 const express = require('express')
-const passport = require('./config/passport')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const db = require('./models')
@@ -15,6 +14,7 @@ const methodOverride = require('method-override')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const passport = require('./config/passport')
 
 app.use(methodOverride('_method'))
 app.use('/upload', express.static(__dirname + '/upload'))
