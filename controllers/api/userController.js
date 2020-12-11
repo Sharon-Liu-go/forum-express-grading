@@ -35,6 +35,31 @@ let userController = {
         }
       })
     }).catch(err => console.log(err))
+  },
+  signUp: (req, res) => {
+    if (req.body.passwordCheck !== req.body.password) {
+      return res.json({ status: 'error', message: '兩次密碼輸入不同！' })
+    } else if (req.body.email.indexOf(" ") >= 0) {
+      return res.json({ status: 'error', message: '信箱不能有空格！' })
+    } else if (req.body.email.indexOf("@") <= 0) {
+      return res.json({ status: 'error', message: 'email欄位不是郵箱地址' })
+    } else {
+      // confirm unique user
+      User.findOne({ where: { email: req.body.email } }).then(user => {
+        if (user) {
+          return res.json({ status: 'error', message: '信箱重複！' })
+        } else {
+          User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+          })
+            .then(() => {
+              return res.json({ status: 'success', message: '成功註冊帳號！' })
+            })
+        }
+      })
+    }
   }
 }
 
