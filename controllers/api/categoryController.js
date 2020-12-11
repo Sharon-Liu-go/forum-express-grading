@@ -11,18 +11,11 @@ const categoryController = {
   },
   postCategories: (req, res) => {
     categoryService.postCategories(req, res, (data) => {
-      if (data["status"] === "error") {
-        return res.json(data)
-      }
-      req.flash('success_messages', data['message'])
       return res.json(data)
     }).catch(err => console.log(err))
   },
   putCategories: (req, res) => {
     categoryService.putCategories(req, res, (data) => {
-      if (data['status'] === "error") {
-        return res.json(data)
-      }
       return res.json(data)
     }).catch(err => console.log(err))
   },
